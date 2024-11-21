@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <limits>
+
+using namespace std;
+
+struct Element {
+    int value;
+    int index;
+};
+
+
+int operationTime(const vector<int>& indices) {
+    return 2 * indices.size() + 1;
+}
+
+
+int minSortTime(vector<int>& arr) {
+    int n = arr.size();
+    vector<Element> elements(n);
+
+    
+    for (int i = 0; i < n; ++i) {
+        elements[i] = { arr[i], i };
+    }
+
+    sort(elements.begin(), elements.end(), [](Element a, Element b) {
+        return a.value < b.value;
+        });
+
+   
+    vector<bool> visited(n, false);
+    int total_time = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (visited[i] || elements[i].index == i) {
+            continue;
+        }
+
+        vector<int> cycle;
+        int j = i;
+
+        while (!visited[j]) {
+            visited[j] = true;
+            cycle.push_back(j);
+            j = elements[j].index; 
+        }
+
+        if (cycle.size() > 1) {
+            total_time += operationTime(cycle);
+        }
+    }
+
+    return total_time;
+}
+
+int main() {
+
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    int result = minSortTime(arr);
+
+    cout << result << endl;
+
+    return 0;
+}
