@@ -1,0 +1,30 @@
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+std::wstring reverse_and_replace(const std::wstring& s) {
+	std::wstring result;
+
+	for (wchar_t c : s) {
+		switch (c) {
+		case L'В': result += L"Д"; break;
+		case L'Д': result += L"К"; break;
+		case L'К': result += L"T"; break;
+		case L'Т': result += L"В"; break;
+		default: result += c;
+		}
+	}
+	reverse(result.begin(), result.end());
+	return result;
+}
+
+std::wstring generate_sequence(int n) {
+	if (n == 1) {
+		return L"В";
+	}
+	std::wstring previous = generate_sequence(n - 1);
+	return previous + L"Т" + reverse_and_replace(previous);
+}
