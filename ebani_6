@@ -28,3 +28,24 @@ std::wstring generate_sequence(int n) {
 	std::wstring previous = generate_sequence(n - 1);
 	return previous + L"Т" + reverse_and_replace(previous);
 }
+
+
+
+int main() {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	int n, p;
+
+	wcin >> n;
+
+	wcin >> p;
+
+	wstring d = generate_sequence(n);
+	wcout << d[p];
+}
+std::wstring generate_sequence(int n) {
+	if (n == 1) {
+		return L"В";
+	}
+	std::wstring previous = generate_sequence(n - 1);
+	return previous + L"Т" + reverse_and_replace(previous);
+}
